@@ -1,4 +1,3 @@
-// src/main.rs
 mod signal;
 mod compute;
 
@@ -30,17 +29,13 @@ pub struct SignalData {
 }
 
 async fn process_signal(params: web::Json<SignalParams>) -> impl Responder {
-    // Generate time vector
     let t = signal::generate_time_vector(params.samples, params.fs);
     
-    // Generate signals
     let x1 = signal::generate_signal(params.a1, params.f1, params.phi1, &t);
     let x2 = signal::generate_signal(params.a2, params.f2, params.phi2, &t);
     
-    // Perform operation
     let y = compute::perform_operation(&x1, &x2, &params.operation);
     
-    // Calculate statistics
     let max_amplitude = compute::calculate_max_amplitude(&y);
     let rms = compute::calculate_rms(&y);
     
@@ -61,7 +56,7 @@ async fn main() -> std::io::Result<()> {
     println!("===========================================");
     println!("Signal Processing Server");
     println!("===========================================");
-    println!("Server running on: http://127.0.0.1:8080");
+    println!("Server berjalan di: http://127.0.0.1:8080");
     println!("Endpoint: POST /process");
     println!("===========================================\n");
     
